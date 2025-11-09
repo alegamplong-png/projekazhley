@@ -1,0 +1,231 @@
+<!-- AZHLEY - Single-file website for clove aromatherapy candles
+     Open this file in a browser (save as azhley.html). Fonts from Google Fonts.
+     Features: product cards, prices & discounts, WA button that reveals number + opens WhatsApp web/mobile, responsive, simple animations.
+-->
+
+<!doctype html>
+<html lang="id">
+<head>
+  <p>azhley lilin premium</p>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AZHLEY Aromatherapy — Lilin Aroma Cengkeh</title>
+  <meta name="description" content="AZHLEY — Lilin aroma terapi cengkeh. Tenangkan suasana dengan aroma alami." />
+
+  <!-- Google Fonts -->
+
+  <style>
+    :root{
+      --cream: #F7E9D7;
+      --brown: #8B5E3C;
+      --gold: #D4AF37;
+      --muted:#6b584a;
+      --glass: rgba(255,255,255,0.6);
+    }
+    *{box-sizing:border-box}
+    body{font-family:'Poppins',system-ui,Segoe UI,Roboto,Helvetica,Arial; margin:0; background:linear-gradient(180deg,var(--cream),#fff); color:var(--muted); -webkit-font-smoothing:antialiased}
+
+    /* Container */
+    .container{max-width:1100px;margin:0 auto;padding:24px}
+
+    /* Header */
+    header{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
+    .logo{display:flex;align-items:center;gap:12px}
+    .logo .brand{font-family:'Playfair Display';font-size:24px;color:var(--brown);letter-spacing:0.6px}
+    nav a{margin-left:16px;text-decoration:none;color:var(--muted);font-weight:600}
+
+    /* Hero */
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:32px;align-items:center;margin-top:18px}
+    .hero .lead{padding:28px;border-radius:16px;background:rgba(255,255,255,0.85);box-shadow:0 6px 24px rgba(139,94,60,0.08)}
+    .hero h1{font-family:'Playfair Display';font-size:34px;color:var(--brown);margin:0 0 12px}
+    .hero p{margin:0 0 18px;color:#5e4c43}
+    .btn{display:inline-block;padding:12px 18px;border-radius:12px;background:var(--brown);color:white;text-decoration:none;font-weight:700;box-shadow:0 6px 18px rgba(139,94,60,0.18);transition:transform .18s ease}
+    .btn:hover{transform:translateY(-3px)}
+    .muted-note{font-size:13px;color:#6a5a52;margin-top:8px}
+
+    .hero-img{position:relative;border-radius:18px;overflow:hidden;box-shadow:0 20px 40px rgba(139,94,60,0.12)}
+    .hero-img img{width:100%;height:100%;object-fit:cover;display:block}
+
+    /* Products */
+    .products{margin-top:40px}
+    .products h2{font-family:'Playfair Display';color:var(--brown);margin-bottom:20px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px}
+    .card{background:white;border-radius:17px;padding:20px;box-shadow:0 8px 12px rgba(0,0,0,0.04);transition:transform .16s ease;display:flex;flex-direction:column}
+    .card:hover{transform:translateY(-6px)}
+    .card img{width:80%;border-radius:10px;height:210px;object-fit:cover}
+    .card .title{font-weight:700;color:var(--brown);margin-top:10px}
+    .card .desc{font-size:13px;color:#6b5851;margin-top:6px;flex:1}
+    .price-row{display:flex;align-items:center;gap:12px;margin-top:10px}
+    .price{font-weight:700;color:var(--brown)}
+    .old{font-size:13px;text-decoration:line-through;color:#b99a86}
+    .discount{background:linear-gradient(90deg,var(--gold),#eabf57);padding:6px 8px;border-radius:8px;font-size:12px;font-weight:700;color:white}
+    .buy{margin-top:12px}
+
+    /* Promo */
+    .promo{margin:30px 0;padding:16px;border-radius:12px;background:linear-gradient(90deg,#fff7ea,#fffef9);border:1px solid rgba(212,175,55,0.12);display:flex;align-items:center;justify-content:space-between}
+    .promo .text{font-weight:700;color:var(--brown)}
+
+    /* About & Footer */
+    .about{margin-top:26px;background:rgba(255,255,255,0.9);padding:18px;border-radius:12px}
+    footer{margin-top:30px;padding:18px 0;color:#7a6457;font-size:14px;display:flex;justify-content:space-between;align-items:center}
+
+    /* WhatsApp popup */
+    .wa-button{position:fixed;right:18px;bottom:18px;background:linear-gradient(180deg,var(--gold),#c99f2a);border-radius:14px;padding:12px 14px;box-shadow:0 12px 30px rgba(212,175,55,0.18);cursor:pointer;display:flex;align-items:center;gap:10px}
+    .wa-button img{width:22px;height:22px}
+    .wa-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.35);display:none;align-items:center;justify-content:center;padding:24px}
+    .wa-card{background:white;padding:18px;border-radius:12px;max-width:420px;width:100%;text-align:center}
+    .wa-card h3{margin:0 0 8px;font-family:'Playfair Display';color:var(--brown)}
+    .wa-number{font-weight:700;font-size:18px;margin:8px 0}
+    .wa-actions{display:flex;gap:10px;justify-content:center;margin-top:12px}
+    .copy-btn, .chat-btn{padding:10px 12px;border-radius:10px;border:0;cursor:pointer;font-weight:700}
+    .copy-btn{background:#f3f1ef}
+    .chat-btn{background:var(--brown);color:white}
+
+    /* small screens */
+    @media (max-width:880px){
+      .hero{grid-template-columns:1fr;}
+      .hero-img{height:260px}
+    }
+
+    /* subtle animation */
+    .fade-in{opacity:0;transform:translateY(10px);animation:fadeIn .9s forwards}
+    @keyframes fadeIn{to{opacity:1;transform:none}}
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div class="logo">
+        <svg width="46" height="46" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="6" fill="#F7E9D7"/><path d="M12 6c-1 0-2 1-2 2 0 3 2 5 2 5s2-2 2-5c0-1-1-2-2-2z" fill="#8B5E3C"/></svg>
+        <div>
+          <div class="brand">AZHLEY</div>
+          <div style="font-size:12px;color:#8c6f5e;margin-top:2px">Aromatherapy • Lilin Cengkeh</div>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="#">Beranda</a>
+        <a href="#products">Produk</a>
+        <a href="#promo">Promo</a>
+        <a href="#about">Tentang</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="lead fade-in">
+          <h1>Temukan Ketenangan dengan Aroma Cengkeh Alami</h1>
+          <p>AZHLEY menghadirkan lilin aroma terapi cengkeh yang dibuat dari bahan alami dan lokal, dirancang untuk menciptakan suasana hangat dan menenangkan.</p>
+          <a href="#products" class="btn">Lihat Produk</a>
+          <div class="muted-note">Gratis ongkir di pembelian 3 pcs (periode promo).</div>
+        </div>
+
+        <div class="hero-img fade-in" style="height:320px">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRy38zIUs0MmJikInvgTrcbvwMj7H7w7T1WGg&s" alt="Lilin aromaterapi menyala"/>
+        </div>
+      </section>
+
+      <section id="products" class="products">
+        <h2>Produk Kami</h2>
+        <div class="grid">
+
+          <!-- Product 1 -->
+          <article class="card fade-in">
+            <img src="lilin.jpg" alt="AZHLEY Clove Serenity"/>
+            <div class="title">AZHLEY Clove Luxury</div>
+            <div class="desc">Lilin 200ml — aroma cengkeh pekat, memberikan rasa hangat dan menenangkan. Bahan alami.</div>
+            <div class="price-row">
+              <div>
+                <div class="old">~Rp50.000~</div>
+                <div class="price">Rp30.000</div>
+              </div>
+              <div class="discount">-40%</div>
+            </div>
+            <div class="buy">
+              <button class="btn" onclick="openWA()">Beli Sekarang</button>
+            </div>
+          </article>
+
+          <!-- Product 2 -->
+         
+
+          <!-- Product 3 -->
+          
+
+        </div>
+      </section>
+
+      <section id="promo" class="promo" aria-label="Promosi">
+        <div class="text">Diskon hingga <strong>40%</strong> minggu ini + gratis ongkir untuk pembelian 3 pcs</div>
+        <div style="font-weight:700;color:var(--brown)">Gunakan kode: <span style="padding:6px 8px;border-radius:8px;background:rgba(139,94,60,0.08)">AZHLEY20</span></div>
+      </section>
+
+      <section id="about" class="about">
+        <h3 style="font-family:'Playfair Display';margin:0 0 8px;color:var(--brown)">Tentang AZHLEY</h3>
+        <p style="margin:0;color:#67524a">AZHLEY berdedikasi menghadirkan lilin aroma terapi berkualitas dari bahan alami dan lokal. Fokus kami pada keharuman cengkeh yang terkenal berasal dari indonsia untuk menciptakan suasana relaksasi di rumah Anda.</p>
+      </section>
+
+    </main>
+
+    <footer>
+      <div>Kontak: <strong>+62 857-7811-2077</strong> • Instagram: @ale_firstley</div>
+      <div>© 2025 AZHLEY Aromatherapy</div>
+    </footer>
+  </div>
+
+  <!-- WhatsApp floating -->
+  <div class="wa-button" role="button" aria-label="Buka WhatsApp" onclick="openWA()">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WA" />
+    <div style="font-weight:700;color:#4b371f">Chat via WA</div>
+  </div>
+
+  <div class="wa-overlay" id="waOverlay" onclick="closeWA(event)">
+    <div class="wa-card" role="dialog" aria-modal="true" onclick="event.stopPropagation()">
+      <h3>Hubungi AZHLEY via WhatsApp</h3>
+      <p class="wa-number" id="waNumber">+62 85778112007</p>
+      <div style="font-size:13px;color:#846957">Klik "Chat" untuk membuka WhatsApp, atau "Salin" untuk menyalin nomor.</div>
+      <div class="wa-actions">
+        <button class="copy-btn" onclick="copyNumber()">Salin Nomor</button>
+        <button class="chat-btn" onclick="chatWA()">Chat</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Phone number used in buttons
+    const PHONE = '+6285778112077'; // update with your real WA number (international format, no spaces)
+    // UI functions
+    function openWA(){
+      document.getElementById('waOverlay').style.display = 'flex';
+    }
+    function closeWA(e){
+      if(e.target === document.getElementById('waOverlay')) document.getElementById('waOverlay').style.display = 'none';
+    }
+    function copyNumber(){
+      navigator.clipboard?.writeText(PHONE).then(()=>{
+        alert('Nomor disalin: ' + PHONE);
+      }).catch(()=>{
+        prompt('Salin nomor ini:', PHONE);
+      });
+    }
+    function chatWA(){
+      // Opens WhatsApp Web or app depending on platform
+      const url = 'https://wa.me/' + PHONE.replace(/[^0-9]/g,'') + '?text=' + encodeURIComponent('Halo AZHLEY, saya mau pesan lilin.');
+      window.open(url, '_blank');
+    }
+
+    // Reveal number text in card (formatted)
+    document.addEventListener('DOMContentLoaded',()=>{
+      const el = document.getElementById('waNumber');
+      el.textContent = '+62 857-7811-2077';
+    });
+
+    // Simple fade-in for cards (stagger)
+    document.addEventListener('DOMContentLoaded', ()=>{
+      document.querySelectorAll('.fade-in').forEach((el, idx)=>{
+        el.style.animationDelay = (idx*120)+'ms';
+      });
+    });
+  </script>
+</body>
+</html>
